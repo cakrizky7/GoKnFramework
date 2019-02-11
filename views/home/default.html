@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="col-md-12">
+        <div class="centered-parent">
+            <div class="centered-child">
+                <h2>WELCOME</h2>
+                <hr>
+                <h3>A GoLang MVC with Knot</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+<style>
+    .custom-body{
+        background-color:azure;
+    }
+    .centered-parent {
+        position: relative;
+        height: 100%;
+    }
+    .centered-child{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .centered-child h2{
+        font-family: 'Exo 2', sans-serif;
+        font-size: 140pt;
+        letter-spacing: 46px;
+        overflow: hidden;
+        animation: 
+            typing 1.5s steps(30, end),
+            blink-caret .5s step-end infinite;
+    }
+    .centered-child h3{
+        font-family: 'Karla', sans-serif;
+        font-size: 14pt;
+        color:rgb(61, 61, 61);
+    }
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
+    }
+    @keyframes blink-caret {
+        from, to { border-color: transparent }
+        50% { border-color: orange }
+    }
+</style>
