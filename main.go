@@ -1,14 +1,15 @@
 package main
 
 import (
-	. "TUTORIAL/controllers"
+	. "GOKNFRAMEWORK/connections"
+	. "GOKNFRAMEWORK/controllers"
+	. "GOKNFRAMEWORK/helpers"
+	"log"
 	"net/http"
 	"os"
 
-	"github.com/eaciit/dbox"
 	_ "github.com/eaciit/dbox/dbc/mongo"
 	"github.com/eaciit/knot/knot.v1"
-	tk "github.com/eaciit/toolkit"
 )
 
 var (
@@ -17,8 +18,6 @@ var (
 		return d + "\\"
 	}()
 )
-var APP_NAME = "TUTORIAL"
-var BASE_URL = "localhost"
 
 func main() {
 	app := knot.GetApp("ext")
@@ -35,31 +34,22 @@ func main() {
 }
 
 func init() {
-	ci := dbox.ConnectionInfo{
-		"127.0.0.1",
-		"tutorial",
-		"",
-		"",
-		nil,
-	}
-	conn, err := dbox.NewConnection("mongo", &ci)
+	cfg := ReadAppConfig()
+	conn, err := GetConnection()
 	if err != nil {
-		tk.Println(err)
-		panic("Connect Failed") // Change with your error handling
+		log.Println(err)
 	}
-	err = conn.Connect()
-	if err != nil {
-		panic("Connect Failed") // Change with your error handling
-	}
-
 	controller := new(Controller)
-	controller.APP_NAME = APP_NAME
-	controller.BASE_URL = BASE_URL
+	controller.APP_NAME = cfg["APP_NAME"]
+	controller.BASE_URL = cfg["BASE_URL"]
 	controller.DB = conn
 
 	app := knot.NewApp("ext")
 	app.ViewsPath = wd + "/views/"
+
+	//Controller + AutoRouting
 	app.Register(&HomeController{controller})
+
 	app.Static("static", wd+"assets")
 	app.LayoutTemplate = "layout.html"
 	knot.RegisterApp(app)
