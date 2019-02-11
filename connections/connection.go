@@ -11,15 +11,14 @@ import (
 func GetConnection() (dbox.IConnection, error) {
 	cfg := ReadAppConfig()
 	ci := dbox.ConnectionInfo{
-		cfg["DB_ADDRESS"],
-		cfg["DB"],
-		cfg["DB_USER"],
-		cfg["DB_PASSWORD"],
+		tk.ToString(cfg["DB_ADDRESS"]),
+		tk.ToString(cfg["DB"]),
+		tk.ToString(cfg["DB_USER"]),
+		tk.ToString(cfg["DB_PASSWORD"]),
 		nil,
 	}
-	conn, err := dbox.NewConnection(cfg["DB_DRIVER"], &ci)
+	conn, err := dbox.NewConnection("mongo", &ci)
 	if err != nil {
-		tk.Println(err)
 		panic("Connect Failed") // Change with your error handling
 	}
 	err = conn.Connect()

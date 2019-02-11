@@ -10,7 +10,7 @@ import (
 
 func wd() string {
 	d, _ := os.Getwd()
-	return strings.Replace(d, "consoleapps", "webapps", -1) + "/"
+	return strings.Replace(d, "consoleapps", "webapps", -1) + "\\"
 }
 func readconfigfile(file *os.File) map[string]string {
 	reader := bufio.NewReader(file)
@@ -33,7 +33,7 @@ func readconfigfile(file *os.File) map[string]string {
 }
 func ReadAppConfig() map[string]string {
 	ret := make(map[string]string)
-	file, err := os.Open(wd() + "conf/app.conf")
+	file, err := os.Open(wd() + "config\\app.conf")
 	if err == nil {
 		defer file.Close()
 		ret = readconfigfile(file)
